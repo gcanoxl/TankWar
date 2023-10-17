@@ -22,7 +22,9 @@ class HomeRoute extends Component with HasGameRef<TankGame> {
       _logo,
       _singleplayer = RoundedButton(
         text: '单人游戏',
-        action: () {},
+        action: () {
+          game.router.pushNamed('singleplayer');
+        },
         color: btColor,
         borderColor: bdColor,
       ),

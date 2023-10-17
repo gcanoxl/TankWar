@@ -7,7 +7,11 @@ import 'package:flutter/material.dart' hide Route;
 import 'package:flutter/services.dart';
 import 'package:tankwar/actors/player_tank.dart';
 import 'package:tankwar/routes/home_route.dart';
+import 'package:tankwar/routes/multiplayer_route.dart';
+import 'package:tankwar/routes/settings_route.dart';
+import 'package:tankwar/routes/singleplayer_route.dart';
 import 'package:tankwar/routes/splash_route.dart';
+import 'package:tankwar/routes/tutorial_route.dart';
 
 class TankGame extends FlameGame with KeyboardEvents {
   @override
@@ -55,6 +59,10 @@ class TankGame extends FlameGame with KeyboardEvents {
       routes: <String, Route>{
         'splash': Route(SplashRoute.new),
         'home': Route(HomeRoute.new),
+        'singleplayer': Route(SingleplaeryRoute.new),
+        'multiplayer': Route(MultiplayerRoute.new),
+        'settings': Route(SettingsRoute.new),
+        'tutorial': Route(TutorialRoute.new),
       },
     ));
     // if (joystickMode) {
