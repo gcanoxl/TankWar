@@ -29,6 +29,8 @@ class TankGame extends FlameGame with KeyboardEvents {
     add(FpsTextComponent(position: Vector2(40, 40)));
   }
 
+  Sprite? map;
+
   void gameInit() {
     addDebugInfo();
     if (joystickMode) {
@@ -37,12 +39,12 @@ class TankGame extends FlameGame with KeyboardEvents {
 
     playerTank.position = size / 2;
     world.add(playerTank);
-    final map = Sprite(images.fromCache('temp_map.webp'));
+    map = Sprite(images.fromCache('temp_map.webp'));
     world.add(
       SpriteComponent(
         sprite: map,
         priority: -9991,
-        size: map.image.size,
+        size: map!.image.size,
       ),
     );
     camera.follow(playerTank);
@@ -50,10 +52,25 @@ class TankGame extends FlameGame with KeyboardEvents {
       Rectangle.fromLTWH(
         size.x / 2,
         size.y / 2,
-        map.image.size.x - size.x ,
-        map.image.size.y - size.y ,
+        map!.image.size.x - size.x,
+        map!.image.size.y - size.y,
       ),
     );
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    if (map != null) {
+      camera.setBounds(
+        Rectangle.fromLTWH(
+          size.x / 2,
+          size.y / 2,
+          map!.image.size.x - size.x,
+          map!.image.size.y - size.y,
+        ),
+      );
+    }
+    super.onGameResize(size);
   }
 
   void addJoystick({double radius = 80, double knobRadius = 30}) {
