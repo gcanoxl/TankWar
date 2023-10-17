@@ -7,7 +7,7 @@ abstract class TankGame extends FlameGame {
   @override
   Color backgroundColor() => Colors.greenAccent;
 
-  late final PlayerTank playerTank = PlayerTank();
+  late final PlayerTank playerTank;
 
   @override
   FutureOr<void> onLoad() async {

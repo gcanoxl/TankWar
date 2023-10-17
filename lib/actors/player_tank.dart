@@ -11,6 +11,17 @@ class PlayerTank extends BaseTank with HasGameRef<TankGame> {
     position = game.size / 2;
   }
 
+  JoystickComponent? joystick;
+  PlayerTank({this.joystick});
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    if (joystick != null) {
+      velocity = joystick!.relativeDelta.normalized();
+    }
+  }
+
   void rotateToDirection(JoystickDirection dir) {
     Vector2 v = Vector2.zero();
     switch (dir) {

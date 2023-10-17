@@ -10,11 +10,11 @@ import 'package:tankwar/keyboard_tank_game.dart';
 void launchMobile() {
   Flame.device.fullScreen();
   Flame.device.setLandscape();
-  runApp(GameWidget(game: KeyboardTankGame()));
+  runApp(GameWidget(game: JoystickTankGame()));
 }
 
 void launchPC() {
-  runApp(GameWidget(game: JoystickTankGame()));
+  runApp(GameWidget(game: KeyboardTankGame()));
 }
 
 void main() {

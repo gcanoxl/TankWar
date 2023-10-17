@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
+import 'package:tankwar/actors/player_tank.dart';
 import 'package:tankwar/tank_game.dart';
 
 class JoystickTankGame extends TankGame {
@@ -16,5 +19,13 @@ class JoystickTankGame extends TankGame {
       margin: const EdgeInsets.only(left: 40, bottom: 40),
     );
     add(joystick);
+    playerTank = PlayerTank(joystick: joystick);
+  }
+
+  @override
+  FutureOr<void> onLoad() {
+    addJoystick();
+
+    super.onLoad();
   }
 }
