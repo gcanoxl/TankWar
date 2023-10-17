@@ -65,22 +65,6 @@ class TankGame extends FlameGame with KeyboardEvents {
         'tutorial': Route(TutorialRoute.new),
       },
     ));
-    // if (joystickMode) {
-    //   addJoystick();
-    // }
-    //
-    // playerTank.position = size / 2;
-    // world.add(playerTank);
-    // final map = Sprite(images.fromCache('temp_map.webp'));
-    // world.add(
-    //   SpriteComponent(
-    //     sprite: map,
-    //     priority: -9991,
-    //     size: map.image.size,
-    //   ),
-    // );
-    // camera.follow(playerTank);
-    // camera.setBounds(Rectangle.fromPoints(size / 2, map.image.size - size / 2));
   }
 
   JoystickDirection calcDirection(
