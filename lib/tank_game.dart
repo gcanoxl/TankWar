@@ -10,6 +10,7 @@ abstract class TankGame extends FlameGame {
   late final PlayerTank playerTank;
 
   @override
+  @mustCallSuper
   FutureOr<void> onLoad() async {
     await images.loadAll([
       'tank_green.png',
