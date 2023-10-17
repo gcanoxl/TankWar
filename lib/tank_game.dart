@@ -1,9 +1,8 @@
 import 'dart:async';
-
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/services/keyboard_key.g.dart';
+import 'package:flutter/services.dart';
 import 'package:tankwar/actors/player_tank.dart';
 
 class TankGame extends FlameGame with KeyboardEvents {
