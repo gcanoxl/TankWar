@@ -2,22 +2,20 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flutter/material.dart';
+import 'package:tankwar/routes/components/color_background.dart';
+import 'package:tankwar/routes/components/text_logo_component.dart';
 import 'package:tankwar/tank_game.dart';
 
 class SplashRoute extends Component with HasGameRef<TankGame>, TapCallbacks {
+  // ACK: singleton pattern to improve performances
+  final TextLogoComponent _logo = TextLogoComponent();
+  TextComponent _loadingMessage = TextComponent();
   @override
   FutureOr<void> onLoad() async {
-    add(RectangleComponent(
-      size: game.size,
-      paint: Paint()..color = Colors.green,
-    ));
-    add(TextComponent(
-      text: "坦克大战",
-      position: game.size / 2,
-      anchor: Anchor.center,
-      scale: Vector2.all(3),
-    ));
+    addAll([
+      ColorBackground(),
+      _logo,
+    ]);
     return super.onLoad();
   }
 
@@ -34,9 +32,8 @@ class SplashRoute extends Component with HasGameRef<TankGame>, TapCallbacks {
   void onMount() async {
     await loadAssets();
     add(
-      TextComponent(
+      _loadingMessage = TextComponent(
         text: "加载完成,点击屏幕任意位置进入游戏!",
-        position: game.size / 2 + Vector2(0, 60),
         anchor: Anchor.center,
       ),
     );
@@ -50,5 +47,15 @@ class SplashRoute extends Component with HasGameRef<TankGame>, TapCallbacks {
   void onTapDown(TapDownEvent event) {
     game.router.pushReplacementNamed('home');
     super.onTapDown(event);
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    _logo.position = size / 2;
+    _loadingMessage.position = Vector2(
+      size.x / 2,
+      _logo.position.y + size.y / 6,
+    );
+    super.onGameResize(size);
   }
 }
