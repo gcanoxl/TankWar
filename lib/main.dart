@@ -13,8 +13,9 @@ void main() {
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
       joystickMode = false;
     } else {
-      Flame.device.fullScreen();
       Flame.device.setLandscape();
+      // NOTE: fullscreen mode improvement
+      Flame.device.fullScreen();
       joystickMode = true;
     }
   } else {

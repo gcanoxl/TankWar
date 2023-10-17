@@ -27,9 +27,8 @@ class TankGame extends FlameGame with KeyboardEvents {
       knob: CircleComponent(radius: knobRadius, paint: knobPaint),
       background: CircleComponent(radius: radius, paint: backgroundPaint),
       margin: const EdgeInsets.only(left: 40, bottom: 40),
-      priority: 19999,
     );
-    add(joystick);
+    camera.viewport.add(joystick);
     playerTank.joystick = joystick;
     addFireButton();
   }
@@ -37,7 +36,7 @@ class TankGame extends FlameGame with KeyboardEvents {
   void addFireButton() {
     final paint = BasicPalette.white.withAlpha(150).paint();
     final pressedPaint = BasicPalette.white.withAlpha(80).paint();
-    add(HudButtonComponent(
+    camera.viewport.add(HudButtonComponent(
       button: CircleComponent(radius: 60, paint: paint),
       buttonDown: CircleComponent(radius: 60, paint: pressedPaint),
       margin: const EdgeInsets.only(right: 40, bottom: 40),
@@ -57,8 +56,6 @@ class TankGame extends FlameGame with KeyboardEvents {
     ]);
 
     if (joystickMode) {
-      // FIX: joystick doesn't work
-      // FIX: fullscreen mode
       addJoystick();
     }
 
