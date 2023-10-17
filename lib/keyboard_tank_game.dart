@@ -1,18 +1,9 @@
-import 'dart:async';
-
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tankwar/actors/player_tank.dart';
 import 'package:tankwar/tank_game.dart';
 
 class KeyboardTankGame extends TankGame with KeyboardEvents {
-  @override
-  FutureOr<void> onLoad() {
-    playerTank = PlayerTank();
-    super.onLoad();
-  }
-
   JoystickDirection calcDirection(
     bool left,
     bool up,
@@ -45,7 +36,6 @@ class KeyboardTankGame extends TankGame with KeyboardEvents {
     RawKeyEvent event,
     Set<LogicalKeyboardKey> keysPressed,
   ) {
-    print('test');
     final dir = calcDirection(
       keysPressed.contains(LogicalKeyboardKey.keyA),
       keysPressed.contains(LogicalKeyboardKey.keyW),
@@ -53,6 +43,9 @@ class KeyboardTankGame extends TankGame with KeyboardEvents {
       keysPressed.contains(LogicalKeyboardKey.keyS),
     );
     playerTank.rotateToDirection(dir);
+    if (keysPressed.contains(LogicalKeyboardKey.space)) {
+      playerTank.fire();
+    }
     return super.onKeyEvent(event, keysPressed);
   }
 }

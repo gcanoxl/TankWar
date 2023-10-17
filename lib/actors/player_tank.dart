@@ -2,17 +2,15 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:tankwar/actors/base_tank.dart';
-import 'package:tankwar/tank_game.dart';
 
-class PlayerTank extends BaseTank with HasGameRef<TankGame> {
+class PlayerTank extends BaseTank {
   @override
   FutureOr<void> onLoad() {
     sprite = Sprite(game.images.fromCache('tank_green.png'));
-    position = game.size / 2;
+    super.onLoad();
   }
 
   JoystickComponent? joystick;
-  PlayerTank({this.joystick});
 
   @override
   void update(double dt) {
