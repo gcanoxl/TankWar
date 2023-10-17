@@ -13,4 +13,36 @@ class PlayerTank extends BaseTank with HasGameRef<TankGame> {
     anchor = Anchor.center;
     position = game.size / 2;
   }
+
+  void rotateToDirection(JoystickDirection dir) {
+    Vector2 v = Vector2.zero();
+    switch (dir) {
+      case JoystickDirection.left:
+        v = Vector2(-1, 0);
+        break;
+      case JoystickDirection.upLeft:
+        v = Vector2(-1, -1);
+        break;
+      case JoystickDirection.up:
+        v = Vector2(0, -1);
+        break;
+      case JoystickDirection.upRight:
+        v = Vector2(1, -1);
+        break;
+      case JoystickDirection.right:
+        v = Vector2(1, 0);
+        break;
+      case JoystickDirection.downRight:
+        v = Vector2(1, 1);
+        break;
+      case JoystickDirection.down:
+        v = Vector2(0, 1);
+        break;
+      case JoystickDirection.downLeft:
+        v = Vector2(-1, 1);
+        break;
+      default:
+    }
+    velocity = v.normalized();
+  }
 }
