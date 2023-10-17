@@ -6,11 +6,12 @@ import 'package:flame/palette.dart';
 import 'package:flutter/material.dart' hide Route;
 import 'package:flutter/services.dart';
 import 'package:tankwar/actors/player_tank.dart';
+import 'package:tankwar/routes/home_route.dart';
 import 'package:tankwar/routes/splash_route.dart';
 
 class TankGame extends FlameGame with KeyboardEvents {
   @override
-  bool get debugMode => true;
+  bool get debugMode => false;
 
   final PlayerTank playerTank = PlayerTank();
   bool joystickMode;
@@ -45,13 +46,15 @@ class TankGame extends FlameGame with KeyboardEvents {
     ));
   }
 
+  late final RouterComponent router;
+
   @override
-  @mustCallSuper
   FutureOr<void> onLoad() async {
-    add(RouterComponent(
+    add(router = RouterComponent(
       initialRoute: 'splash',
       routes: <String, Route>{
         'splash': Route(SplashRoute.new),
+        'home': Route(HomeRoute.new),
       },
     ));
     // if (joystickMode) {
