@@ -22,10 +22,7 @@ class JoystickTankGame extends TankGame {
     playerTank.joystick = joystick;
   }
 
-  @override
-  FutureOr<void> onLoad() {
-    addJoystick();
-
+  void addFireButton() {
     final paint = BasicPalette.white.withAlpha(150).paint();
     final pressedPaint = BasicPalette.white.withAlpha(80).paint();
     add(
@@ -37,6 +34,12 @@ class JoystickTankGame extends TankGame {
           })
         ..position = size - Vector2.all(150),
     );
+  }
+
+  @override
+  FutureOr<void> onLoad() {
+    addJoystick();
+    addFireButton();
 
     super.onLoad();
   }
