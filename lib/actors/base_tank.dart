@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:tankwar/actors/bullet.dart';
 import 'package:tankwar/tank_game.dart';
 
-abstract class BaseTank extends SpriteComponent with HasGameRef<TankGame> {
+abstract class BaseTank extends SpriteComponent
+    with HasGameRef<TankGame>, CollisionCallbacks {
   BaseTank() : super(nativeAngle: pi, anchor: Anchor.center);
   Vector2 velocity = Vector2.zero();
   Vector2 bulletVelocity = Vector2(0, 1).normalized();
@@ -18,6 +20,7 @@ abstract class BaseTank extends SpriteComponent with HasGameRef<TankGame> {
     if (sprite != null) {
       size = sprite!.image.size.scaled(0.6);
     }
+    add(RectangleHitbox());
     return super.onLoad();
   }
 

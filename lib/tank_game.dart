@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/extensions.dart';
@@ -6,7 +7,6 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/material.dart' hide Route;
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:tankwar/actors/player_tank.dart';
 import 'package:tankwar/routes/home_route.dart';
@@ -16,9 +16,9 @@ import 'package:tankwar/routes/singleplayer_route.dart';
 import 'package:tankwar/routes/splash_route.dart';
 import 'package:tankwar/routes/tutorial_route.dart';
 
-class TankGame extends FlameGame with KeyboardEvents {
+class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
   @override
-  bool get debugMode => false;
+  bool get debugMode => true;
 
   final PlayerTank playerTank = PlayerTank();
   bool joystickMode;
@@ -48,6 +48,7 @@ class TankGame extends FlameGame with KeyboardEvents {
         size: map!.image.size,
       ),
     );
+    world.add(ScreenHitbox());
     camera.follow(playerTank);
     resetCameraBounds(size);
   }
