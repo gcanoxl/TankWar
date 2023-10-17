@@ -25,15 +25,14 @@ class JoystickTankGame extends TankGame {
   void addFireButton() {
     final paint = BasicPalette.white.withAlpha(150).paint();
     final pressedPaint = BasicPalette.white.withAlpha(80).paint();
-    add(
-      ButtonComponent(
-          button: CircleComponent(radius: 60, paint: paint),
-          buttonDown: CircleComponent(radius: 60, paint: pressedPaint),
-          onPressed: () {
-            playerTank.fire();
-          })
-        ..position = size - Vector2.all(150),
-    );
+    add(HudButtonComponent(
+      button: CircleComponent(radius: 60, paint: paint),
+      buttonDown: CircleComponent(radius: 60, paint: pressedPaint),
+      margin: const EdgeInsets.only(right: 40, bottom: 40),
+      onPressed: () {
+        playerTank.fire();
+      },
+    ));
   }
 
   @override
