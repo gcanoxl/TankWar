@@ -4,35 +4,29 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:tankwar/joystick_tank_game.dart';
-import 'package:tankwar/keyboard_tank_game.dart';
-
-void launchMobile() {
-  Flame.device.fullScreen();
-  Flame.device.setLandscape();
-  runApp(GameWidget(game: JoystickTankGame()));
-}
-
-void launchPC() {
-  runApp(GameWidget(game: KeyboardTankGame()));
-}
+import 'package:tankwar/tank_game.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  bool isMobile;
+  bool joystickMode;
   if (!kIsWeb) {
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-      isMobile = false;
+      joystickMode = false;
     } else {
-      isMobile = true;
+      Flame.device.fullScreen();
+      Flame.device.setLandscape();
+      joystickMode = true;
     }
   } else {
     // TODO: check for UA?
-    isMobile = true;
+    joystickMode = true;
   }
-  if (isMobile) {
-    launchMobile();
-  } else {
-    launchPC();
-  }
+
+  runApp(
+    GameWidget(
+      game: TankGame(
+        joystickMode: joystickMode,
+      ),
+    ),
+  );
 }
