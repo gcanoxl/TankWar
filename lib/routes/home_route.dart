@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flame/components.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tankwar/routes/components/color_background.dart';
@@ -44,7 +46,7 @@ class HomeRoute extends Component with HasGameRef<TankGame> {
       ),
       _quit = RoundedButton(
         text: "退出游戏",
-        action: () {},
+        action: () => exit(0),
         color: btColor,
         borderColor: bdColor,
       ),
