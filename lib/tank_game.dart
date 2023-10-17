@@ -8,7 +8,7 @@ import 'package:tankwar/actors/player_tank.dart';
 
 abstract class TankGame extends FlameGame {
   @override
-  bool get debugMode => true;
+  bool get debugMode => false;
 
   final PlayerTank playerTank = PlayerTank();
 

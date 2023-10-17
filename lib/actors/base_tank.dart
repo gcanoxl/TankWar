@@ -32,6 +32,6 @@ abstract class BaseTank extends SpriteComponent with HasGameRef<TankGame> {
   }
 
   void fire() {
-    game.add(Bullet(velocity: bulletVelocity)..position = position);
+    game.world.add(Bullet(velocity: bulletVelocity)..position = position);
   }
 }
