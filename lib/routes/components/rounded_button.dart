@@ -2,7 +2,8 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/painting.dart';
 
-class RoundedButton extends PositionComponent with TapCallbacks {
+class RoundedButton extends PositionComponent
+    with TapCallbacks, HoverCallbacks {
   RoundedButton({
     required this.text,
     required this.action,
@@ -47,16 +48,32 @@ class RoundedButton extends PositionComponent with TapCallbacks {
   @override
   void onTapDown(TapDownEvent event) {
     scale = Vector2.all(1.05);
+    oldColor = _bgPaint.color;
+    _bgPaint.color = oldColor.withAlpha(180);
   }
 
   @override
   void onTapUp(TapUpEvent event) {
     scale = Vector2.all(1.0);
+    _bgPaint.color = oldColor;
     action();
   }
 
   @override
   void onTapCancel(TapCancelEvent event) {
+    scale = Vector2.all(1.0);
+    _bgPaint.color = oldColor;
+  }
+
+  late Color oldColor;
+
+  @override
+  void onHoverEnter() {
+    scale = Vector2.all(1.05);
+  }
+
+  @override
+  void onHoverExit() {
     scale = Vector2.all(1.0);
   }
 }
