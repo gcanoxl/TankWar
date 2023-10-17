@@ -16,7 +16,7 @@ abstract class BaseTank extends SpriteComponent with HasGameRef<TankGame> {
   @override
   FutureOr<void> onLoad() {
     if (sprite != null) {
-      size = sprite!.image.size;
+      size = sprite!.image.size.scaled(0.6);
     }
     return super.onLoad();
   }

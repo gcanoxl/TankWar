@@ -14,7 +14,7 @@ class Bullet extends SpriteComponent with HasGameRef<TankGame> {
   @override
   FutureOr<void> onLoad() {
     sprite = Sprite(game.images.fromCache('bullet_green_1.png'));
-    size = sprite!.image.size;
+    size = sprite!.image.size.scaled(0.6);
     return super.onLoad();
   }
 

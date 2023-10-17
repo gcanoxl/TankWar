@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flame/components.dart';
+import 'package:flame/experimental.dart';
+import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
@@ -22,6 +24,37 @@ class TankGame extends FlameGame with KeyboardEvents {
   TankGame({this.joystickMode = false});
 
   late final JoystickComponent joystick;
+
+  void addDebugInfo() {
+    add(FpsTextComponent(position: Vector2(40, 40)));
+  }
+
+  void gameInit() {
+    addDebugInfo();
+    if (joystickMode) {
+      addJoystick();
+    }
+
+    playerTank.position = size / 2;
+    world.add(playerTank);
+    final map = Sprite(images.fromCache('temp_map.webp'));
+    world.add(
+      SpriteComponent(
+        sprite: map,
+        priority: -9991,
+        size: map.image.size,
+      ),
+    );
+    camera.follow(playerTank);
+    camera.setBounds(
+      Rectangle.fromLTWH(
+        size.x / 2,
+        size.y / 2,
+        map.image.size.x - size.x / 2,
+        map.image.size.y - size.y / 2,
+      ),
+    );
+  }
 
   void addJoystick({double radius = 80, double knobRadius = 30}) {
     final knobPaint = BasicPalette.white.withAlpha(200).paint();
