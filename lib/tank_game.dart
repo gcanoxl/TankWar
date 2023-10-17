@@ -50,8 +50,8 @@ class TankGame extends FlameGame with KeyboardEvents {
       Rectangle.fromLTWH(
         size.x / 2,
         size.y / 2,
-        map.image.size.x - size.x / 2,
-        map.image.size.y - size.y / 2,
+        map.image.size.x - size.x ,
+        map.image.size.y - size.y ,
       ),
     );
   }
