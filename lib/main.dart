@@ -1,10 +1,21 @@
 import 'dart:io';
 
+import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tankwar/joystick_tank_game.dart';
 import 'package:tankwar/keyboard_tank_game.dart';
+
+void launchMobile() {
+  Flame.device.fullScreen();
+  Flame.device.setLandscape();
+  runApp(GameWidget(game: KeyboardTankGame()));
+}
+
+void launchPC() {
+  runApp(GameWidget(game: JoystickTankGame()));
+}
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +31,8 @@ void main() {
     isMobile = true;
   }
   if (isMobile) {
-    runApp(GameWidget(game: KeyboardTankGame()));
+    launchMobile();
   } else {
-    runApp(GameWidget(game: JoystickTankGame()));
+    launchPC();
   }
 }
