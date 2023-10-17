@@ -6,6 +6,7 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/material.dart' hide Route;
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:tankwar/actors/player_tank.dart';
 import 'package:tankwar/routes/home_route.dart';
@@ -48,6 +49,10 @@ class TankGame extends FlameGame with KeyboardEvents {
       ),
     );
     camera.follow(playerTank);
+    resetCameraBounds(size);
+  }
+
+  void resetCameraBounds(Vector2 size) {
     camera.setBounds(
       Rectangle.fromLTWH(
         size.x / 2,
@@ -61,14 +66,7 @@ class TankGame extends FlameGame with KeyboardEvents {
   @override
   void onGameResize(Vector2 size) {
     if (map != null) {
-      camera.setBounds(
-        Rectangle.fromLTWH(
-          size.x / 2,
-          size.y / 2,
-          map!.image.size.x - size.x,
-          map!.image.size.y - size.y,
-        ),
-      );
+      resetCameraBounds(size);
     }
     super.onGameResize(size);
   }
