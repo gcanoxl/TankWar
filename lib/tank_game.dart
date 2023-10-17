@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'package:flame/components.dart';
-import 'package:flame/experimental.dart';
-import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Route;
 import 'package:flutter/services.dart';
 import 'package:tankwar/actors/player_tank.dart';
+import 'package:tankwar/routes/splash_route.dart';
 
 class TankGame extends FlameGame with KeyboardEvents {
   @override
@@ -49,28 +48,28 @@ class TankGame extends FlameGame with KeyboardEvents {
   @override
   @mustCallSuper
   FutureOr<void> onLoad() async {
-    await images.loadAll([
-      'tank_green.png',
-      'bullet_green_1.png',
-      'temp_map.webp',
-    ]);
-
-    if (joystickMode) {
-      addJoystick();
-    }
-
-    playerTank.position = size / 2;
-    world.add(playerTank);
-    final map = Sprite(images.fromCache('temp_map.webp'));
-    world.add(
-      SpriteComponent(
-        sprite: map,
-        priority: -9991,
-        size: map.image.size,
-      ),
-    );
-    camera.follow(playerTank);
-    camera.setBounds(Rectangle.fromPoints(size / 2, map.image.size - size / 2));
+    add(RouterComponent(
+      initialRoute: 'splash',
+      routes: <String, Route>{
+        'splash': Route(SplashRoute.new),
+      },
+    ));
+    // if (joystickMode) {
+    //   addJoystick();
+    // }
+    //
+    // playerTank.position = size / 2;
+    // world.add(playerTank);
+    // final map = Sprite(images.fromCache('temp_map.webp'));
+    // world.add(
+    //   SpriteComponent(
+    //     sprite: map,
+    //     priority: -9991,
+    //     size: map.image.size,
+    //   ),
+    // );
+    // camera.follow(playerTank);
+    // camera.setBounds(Rectangle.fromPoints(size / 2, map.image.size - size / 2));
   }
 
   JoystickDirection calcDirection(
