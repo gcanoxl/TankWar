@@ -5,27 +5,26 @@ import 'package:tankwar/actors/base_tank.dart';
 
 class EnemyTank extends BaseTank {
   final _rnd = Random();
-  late final Timer countdown;
+  late Timer countdown;
 
   @override
   String get type => 'sand';
+  static int fireInterval = 5;
 
   @override
   void onMount() {
-    countdown = Timer(
-      _rnd.nextDouble(),
-      repeat: true,
-    );
+    countdown = Timer(_rnd.nextDouble() * fireInterval);
     super.onMount();
   }
 
   @override
   void update(double dt) {
-    fire();
-    // countdown.update(dt);
-    // if (countdown.finished) {
-    //   fire();
-    // }
+    // fire();
+    countdown.update(dt);
+    if (countdown.finished) {
+      fire();
+      countdown = Timer(_rnd.nextDouble() * fireInterval);
+    }
     super.update(dt);
   }
 }
