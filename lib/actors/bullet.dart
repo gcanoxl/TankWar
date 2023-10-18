@@ -26,12 +26,16 @@ class Bullet extends SpriteComponent
     if (velocity != Vector2.zero()) {
       position += velocity * maxSpeed * dt;
     }
+    if (game.map != null) {
+      final leftTopCorner = absolutePositionOfAnchor(Anchor.topLeft);
+      final rightDownCorner = absolutePositionOfAnchor(Anchor.bottomRight);
+      if (leftTopCorner.x > game.map!.image.size.x ||
+          leftTopCorner.y > game.map!.image.size.y ||
+          rightDownCorner.x < 0 ||
+          rightDownCorner.y < 0) {
+        removeFromParent();
+      }
+    }
     super.update(dt);
-  }
-
-  @override
-  void onCollisionEnd(PositionComponent other) {
-    if (other is ScreenHitbox) removeFromParent();
-    super.onCollisionEnd(other);
   }
 }
