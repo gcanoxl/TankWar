@@ -26,6 +26,7 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
   TankGame({this.joystickMode = false});
 
   late final JoystickComponent joystick;
+  late final ScreenHitbox screenHitbox;
 
   Sprite? map;
 
@@ -44,7 +45,7 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
         size: map!.image.size,
       ),
     );
-    world.add(ScreenHitbox());
+    world.add(screenHitbox = ScreenHitbox());
     camera.follow(playerTank);
     resetCameraBounds(size);
     camera.viewport.add(DebugInfoComponent());

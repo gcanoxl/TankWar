@@ -26,7 +26,7 @@ abstract class BaseTank extends SpriteComponent
 
   @override
   void update(double dt) {
-    if (isColliding) return;
+    if (collidingWith(game.screenHitbox)) return;
     position += velocity * maxTankSpeed * dt;
     if (velocity != Vector2.zero()) {
       angle += angleTo(velocity + position);
