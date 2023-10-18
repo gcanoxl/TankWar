@@ -26,11 +26,26 @@ abstract class BaseTank extends SpriteComponent
 
   @override
   void update(double dt) {
-    if (collidingWith(game.screenHitbox)) return;
     position += velocity * maxTankSpeed * dt;
     if (velocity != Vector2.zero()) {
       angle += angleTo(velocity + position);
       bulletVelocity = velocity;
+    }
+    if (game.map != null) {
+      final leftTopCorner = absolutePositionOfAnchor(Anchor.topLeft);
+      final rightDownCorner = absolutePositionOfAnchor(Anchor.bottomRight);
+      if (leftTopCorner.x > game.map!.image.size.x) {
+        position.x = game.map!.image.size.x;
+      }
+      if (leftTopCorner.y > game.map!.image.size.y) {
+        position.y = game.map!.image.size.y;
+      }
+      if (rightDownCorner.x < 0) {
+        position.x = 0;
+      }
+      if (rightDownCorner.y < 0) {
+        position.y = 0;
+      }
     }
     super.update(dt);
   }
@@ -40,17 +55,5 @@ abstract class BaseTank extends SpriteComponent
       velocity: bulletVelocity,
       owner: this,
     )..position = position);
-  }
-
-  @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is ScreenHitbox) {
-      if (intersectionPoints.length == 2) {
-        final mid = (intersectionPoints.first + intersectionPoints.last) / 2;
-        final collisionNormal = absoluteCenter - mid;
-        position += collisionNormal.normalized();
-      }
-    }
-    super.onCollision(intersectionPoints, other);
   }
 }

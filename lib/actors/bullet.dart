@@ -4,6 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:tankwar/actors/base_tank.dart';
+import 'package:tankwar/actors/explosion.dart';
 import 'package:tankwar/tank_game.dart';
 
 class Bullet extends SpriteComponent
@@ -48,6 +49,7 @@ class Bullet extends SpriteComponent
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is BaseTank && other != owner) {
+      game.world.add(Explosion(position: (other.position + position) / 2));
       other.removeFromParent();
       removeFromParent();
     }
