@@ -36,7 +36,10 @@ abstract class BaseTank extends SpriteComponent
   }
 
   void fire() {
-    game.world.add(Bullet(velocity: bulletVelocity)..position = position);
+    game.world.add(Bullet(
+      velocity: bulletVelocity,
+      owner: this,
+    )..position = position);
   }
 
   @override

@@ -3,13 +3,17 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
+import 'package:tankwar/actors/base_tank.dart';
 import 'package:tankwar/tank_game.dart';
 
 class Bullet extends SpriteComponent
     with HasGameRef<TankGame>, CollisionCallbacks {
   static const double maxSpeed = 800;
 
-  Bullet({required this.velocity}) : super(anchor: Anchor.center) {
+  Bullet({
+    required this.owner,
+    required this.velocity,
+  }) : super(anchor: Anchor.center) {
     angle += angleTo(velocity + position);
   }
   final Vector2 velocity;
@@ -37,5 +41,16 @@ class Bullet extends SpriteComponent
       }
     }
     super.update(dt);
+  }
+
+  final BaseTank owner;
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    if (other is BaseTank && other != owner) {
+      other.removeFromParent();
+      removeFromParent();
+    }
+    super.onCollision(intersectionPoints, other);
   }
 }
