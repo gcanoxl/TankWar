@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
+import 'package:flutter/material.dart';
 import 'package:tankwar/actors/bullet.dart';
 import 'package:tankwar/tank_game.dart';
 
@@ -26,6 +27,7 @@ abstract class BaseTank extends SpriteComponent
 
   @override
   void update(double dt) {
+    if (isColliding) return;
     position += velocity * maxTankSpeed * dt;
     if (velocity != Vector2.zero()) {
       angle += angleTo(velocity + position);
@@ -36,5 +38,17 @@ abstract class BaseTank extends SpriteComponent
 
   void fire() {
     game.world.add(Bullet(velocity: bulletVelocity)..position = position);
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    if (other is ScreenHitbox) {
+      if (intersectionPoints.length == 2) {
+        final mid = (intersectionPoints.first + intersectionPoints.last) / 2;
+        final collisionNormal = absoluteCenter - mid;
+        position += collisionNormal.normalized();
+      }
+    }
+    super.onCollision(intersectionPoints, other);
   }
 }
