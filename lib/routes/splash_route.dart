@@ -22,6 +22,7 @@ class SplashRoute extends Component with HasGameRef<TankGame>, TapCallbacks {
   loadAssets() async {
     await game.images.loadAll([
       'tank_green.png',
+      'tank_sand.png',
       'bullet_green_1.png',
       'temp_map.webp',
     ]);
