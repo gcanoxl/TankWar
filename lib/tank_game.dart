@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/extensions.dart';
@@ -9,6 +8,7 @@ import 'package:flame/palette.dart';
 import 'package:flutter/material.dart' hide Route;
 import 'package:flutter/services.dart';
 import 'package:tankwar/actors/player_tank.dart';
+import 'package:tankwar/debug_info_component.dart';
 import 'package:tankwar/routes/home_route.dart';
 import 'package:tankwar/routes/multiplayer_route.dart';
 import 'package:tankwar/routes/settings_route.dart';
@@ -26,14 +26,9 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
 
   late final JoystickComponent joystick;
 
-  void addDebugInfo() {
-    add(FpsTextComponent(position: Vector2(40, 40)));
-  }
-
   Sprite? map;
 
   void gameInit() {
-    addDebugInfo();
     if (joystickMode) {
       addJoystick();
     }
@@ -51,6 +46,7 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
     world.add(ScreenHitbox());
     camera.follow(playerTank);
     resetCameraBounds(size);
+    camera.viewport.add(DebugInfoComponent());
   }
 
   void resetCameraBounds(Vector2 size) {
