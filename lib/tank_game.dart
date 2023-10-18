@@ -34,7 +34,7 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
       addJoystick();
     }
 
-    playerTank.position = size / 2;
+    playerTank.position = Vector2(50, 50);
     world.add(playerTank);
     map = Sprite(images.fromCache('temp_map.webp'));
     world.add(
@@ -46,7 +46,9 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
     );
     camera.follow(playerTank);
     resetCameraBounds(size);
-    camera.viewport.add(DebugInfoComponent());
+    if (debugMode) {
+      camera.viewport.add(DebugInfoComponent());
+    }
 
     for (double i = 0; i < 10; i++) {
       world.add(EnemyTank()..position = Vector2(100 * i + 100, 200));
