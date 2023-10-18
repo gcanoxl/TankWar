@@ -13,10 +13,13 @@ abstract class BaseTank extends SpriteComponent
   Vector2 velocity = Vector2.zero();
   Vector2 bulletVelocity = Vector2(0, 1).normalized();
 
+  final type = 'green';
+
   static const double maxTankSpeed = 200;
 
   @override
   FutureOr<void> onLoad() {
+    sprite = Sprite(game.images.fromCache('tank_$type.png'));
     if (sprite != null) {
       size = sprite!.image.size.scaled(0.6);
     }

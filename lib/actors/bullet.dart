@@ -20,7 +20,7 @@ class Bullet extends SpriteComponent
   final Vector2 velocity;
   @override
   FutureOr<void> onLoad() {
-    sprite = Sprite(game.images.fromCache('bullet_green_1.png'));
+    sprite = Sprite(game.images.fromCache('bullet_${owner.type}_1.png'));
     size = sprite!.image.size.scaled(0.6);
     add(CircleHitbox());
     return super.onLoad();

@@ -24,6 +24,7 @@ class SplashRoute extends Component with HasGameRef<TankGame>, TapCallbacks {
       'tank_green.png',
       'tank_sand.png',
       'bullet_green_1.png',
+      'bullet_sand_1.png',
       'temp_map.webp',
       'explosion1.png',
       'explosion2.png',

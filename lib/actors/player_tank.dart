@@ -4,12 +4,6 @@ import 'package:flame/components.dart';
 import 'package:tankwar/actors/base_tank.dart';
 
 class PlayerTank extends BaseTank {
-  @override
-  FutureOr<void> onLoad() {
-    sprite = Sprite(game.images.fromCache('tank_green.png'));
-    super.onLoad();
-  }
-
   JoystickComponent? joystick;
 
   @override
