@@ -18,7 +18,7 @@ import 'package:tankwar/routes/tutorial_route.dart';
 
 class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
   @override
-  bool get debugMode => true;
+  bool get debugMode => false;
 
   final PlayerTank playerTank = PlayerTank();
   bool joystickMode;
