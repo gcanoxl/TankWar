@@ -21,7 +21,7 @@ abstract class BaseTank extends SpriteComponent
     if (sprite != null) {
       size = sprite!.image.size.scaled(0.6);
     }
-    add(RectangleHitbox());
+    add(CircleHitbox());
     return super.onLoad();
   }
 
