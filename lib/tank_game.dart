@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
-import 'package:flame/extensions.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
@@ -9,6 +8,7 @@ import 'package:flutter/material.dart' hide Route;
 import 'package:flutter/services.dart';
 import 'package:tankwar/actors/enemy_tank.dart';
 import 'package:tankwar/actors/player_tank.dart';
+import 'package:tankwar/components/map_component.dart';
 import 'package:tankwar/debug_info_component.dart';
 import 'package:tankwar/routes/home_route.dart';
 import 'package:tankwar/routes/multiplayer_route.dart';
@@ -27,32 +27,28 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
 
   late final JoystickComponent joystick;
 
-  Sprite? map;
+  MapComponent? map;
 
   void gameInit() {
     if (joystickMode) {
       addJoystick();
     }
 
+    map = MapComponent();
+    world.add(map as Component);
+
     playerTank.position = Vector2(50, 50);
     world.add(playerTank);
-    map = Sprite(images.fromCache('temp_map.webp'));
-    world.add(
-      SpriteComponent(
-        sprite: map,
-        priority: -9991,
-        size: map!.image.size,
-      ),
-    );
+
     camera.follow(playerTank);
     resetCameraBounds(size);
     if (debugMode) {
       camera.viewport.add(DebugInfoComponent());
     }
 
-    for (double i = 0; i < 10; i++) {
-      world.add(EnemyTank()..position = Vector2(100 * i + 100, 200));
-    }
+    // for (double i = 0; i < 10; i++) {
+    //   world.add(EnemyTank()..position = Vector2(100 * i + 100, 200));
+    // }
   }
 
   void resetCameraBounds(Vector2 size) {
@@ -60,8 +56,8 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
       Rectangle.fromLTWH(
         size.x / 2,
         size.y / 2,
-        map!.image.size.x - size.x,
-        map!.image.size.y - size.y,
+        map!.size.x - size.x,
+        map!.size.y - size.y,
       ),
     );
   }
