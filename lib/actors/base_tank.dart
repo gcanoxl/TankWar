@@ -32,11 +32,11 @@ abstract class BaseTank extends SpriteComponent
     final v = velocity * maxTankSpeed * dt;
     final newPosiiotn = position + v;
     if (newPosiiotn.x - size.x / 2 < 0 ||
-        newPosiiotn.x + size.x / 2 > game.map!.image.size.x) {
+        newPosiiotn.x + size.x / 2 > game.map!.size.x) {
       velocity.x = 0;
     }
     if (newPosiiotn.y - size.y / 2 < 0 ||
-        newPosiiotn.y + size.y / 2 > game.map!.image.size.y) {
+        newPosiiotn.y + size.y / 2 > game.map!.size.y) {
       velocity.y = 0;
     }
 

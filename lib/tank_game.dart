@@ -6,7 +6,6 @@ import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/material.dart' hide Route;
 import 'package:flutter/services.dart';
-import 'package:tankwar/actors/enemy_tank.dart';
 import 'package:tankwar/actors/player_tank.dart';
 import 'package:tankwar/components/map_component.dart';
 import 'package:tankwar/debug_info_component.dart';
