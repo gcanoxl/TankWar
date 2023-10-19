@@ -29,26 +29,23 @@ abstract class BaseTank extends SpriteComponent
 
   @override
   void update(double dt) {
+    final v = velocity * maxTankSpeed * dt;
+    final newPosiiotn = position + v;
+    if (newPosiiotn.x - size.x / 2 < 0 ||
+        newPosiiotn.x + size.x / 2 > game.map!.image.size.x) {
+      velocity.x = 0;
+    }
+    if (newPosiiotn.y - size.y / 2 < 0 ||
+        newPosiiotn.y + size.y / 2 > game.map!.image.size.y) {
+      velocity.y = 0;
+    }
+
+    velocity.normalize();
+
     position += velocity * maxTankSpeed * dt;
     if (velocity != Vector2.zero()) {
       angle += angleTo(velocity + position);
       bulletVelocity = velocity;
-    }
-    if (game.map != null) {
-      final leftTopCorner = absolutePositionOfAnchor(Anchor.topLeft);
-      final rightDownCorner = absolutePositionOfAnchor(Anchor.bottomRight);
-      if (leftTopCorner.x > game.map!.image.size.x) {
-        position.x = game.map!.image.size.x;
-      }
-      if (leftTopCorner.y > game.map!.image.size.y) {
-        position.y = game.map!.image.size.y;
-      }
-      if (rightDownCorner.x < 0) {
-        position.x = 0;
-      }
-      if (rightDownCorner.y < 0) {
-        position.y = 0;
-      }
     }
     super.update(dt);
   }
