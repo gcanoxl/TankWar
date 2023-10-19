@@ -37,11 +37,11 @@ abstract class BaseTank extends SpriteComponent
     if (game.map != null) {
       final leftTopCorner = absolutePositionOfAnchor(Anchor.topLeft);
       final rightDownCorner = absolutePositionOfAnchor(Anchor.bottomRight);
-      if (leftTopCorner.x > game.map!.image.size.x) {
-        position.x = game.map!.image.size.x;
+      if (leftTopCorner.x > game.map!.size.x) {
+        position.x = game.map!.size.x;
       }
-      if (leftTopCorner.y > game.map!.image.size.y) {
-        position.y = game.map!.image.size.y;
+      if (leftTopCorner.y > game.map!.size.y) {
+        position.y = game.map!.size.y;
       }
       if (rightDownCorner.x < 0) {
         position.x = 0;
