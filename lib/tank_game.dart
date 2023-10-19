@@ -6,6 +6,7 @@ import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/material.dart' hide Route;
 import 'package:flutter/services.dart';
+import 'package:tankwar/actors/enemy_tank.dart';
 import 'package:tankwar/actors/player_tank.dart';
 import 'package:tankwar/components/map_component.dart';
 import 'package:tankwar/debug_info_component.dart';
@@ -34,7 +35,7 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
     }
 
     map = MapComponent();
-    world.add(map as Component);
+    world.add(map!);
 
     playerTank.position = Vector2(50, 50);
     world.add(playerTank);
