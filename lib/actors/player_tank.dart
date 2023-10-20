@@ -9,6 +9,7 @@ class PlayerTank extends BaseTank {
     super.update(dt);
     if (joystick != null) {
       velocity = joystick!.relativeDelta.normalized();
+      angle += angleTo(velocity + position);
     }
   }
 
@@ -42,5 +43,6 @@ class PlayerTank extends BaseTank {
       default:
     }
     velocity = v.normalized();
+    angle += angleTo(velocity + position);
   }
 }

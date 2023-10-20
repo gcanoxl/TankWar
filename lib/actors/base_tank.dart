@@ -29,13 +29,9 @@ abstract class BaseTank extends SpriteComponent
     return super.onLoad();
   }
 
-  Vector2 oldPosition = Vector2.zero();
   @override
   void update(double dt) {
     position += velocity * maxTankSpeed * dt;
-    if (velocity != Vector2.zero()) {
-      angle += angleTo(velocity + position);
-    }
     super.update(dt);
   }
 
