@@ -22,9 +22,9 @@ abstract class BaseTank extends SpriteComponent
   FutureOr<void> onLoad() {
     sprite = Sprite(game.images.fromCache('tank_$type.png'));
     if (sprite != null) {
-      size = sprite!.image.size.scaled(1);
+      size = sprite!.image.size.scaled(0.6);
     }
-    add(RectangleHitbox(size: Vector2(84, 80)));
+    add(RectangleHitbox(size: Vector2(84 * 0.6, 80 * 0.6), isSolid: true));
     return super.onLoad();
   }
 
