@@ -21,13 +21,11 @@ import 'package:tankwar/routes/singleplayer_route.dart';
 import 'package:tankwar/routes/splash_route.dart';
 import 'package:tankwar/routes/tutorial_route.dart';
 
-class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
+class TankGame extends FlameGame with HasCollisionDetection {
   @override
   bool get debugMode => false;
 
   final PlayerTank playerTank = PlayerTank();
-  bool joystickMode;
-  TankGame({this.joystickMode = false});
 
   late final JoystickComponent joystick;
 
@@ -59,9 +57,7 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
   }
 
   void gameInit() {
-    if (joystickMode) {
-      addJoystick();
-    }
+    addJoystick();
 
     world.add(mapComponent!);
 
@@ -141,53 +137,5 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
       },
     ));
     await loadMap();
-  }
-
-  JoystickDirection calcDirection(
-    bool left,
-    bool up,
-    bool right,
-    bool down,
-  ) {
-    if (left && !up && !right && !down) {
-      return JoystickDirection.left;
-    } else if (left && up && !right && !down) {
-      return JoystickDirection.upLeft;
-    } else if (!left && up && !right && !down) {
-      return JoystickDirection.up;
-    } else if (!left && up && right && !down) {
-      return JoystickDirection.upRight;
-    } else if (!left && !up && right && !down) {
-      return JoystickDirection.right;
-    } else if (!left && !up && right && down) {
-      return JoystickDirection.downRight;
-    } else if (!left && !up && !right && down) {
-      return JoystickDirection.down;
-    } else if (left && !up && !right && down) {
-      return JoystickDirection.downLeft;
-    } else {
-      return JoystickDirection.idle;
-    }
-  }
-
-  @override
-  KeyEventResult onKeyEvent(
-    RawKeyEvent event,
-    Set<LogicalKeyboardKey> keysPressed,
-  ) {
-    if (joystickMode) {
-      return super.onKeyEvent(event, keysPressed);
-    }
-    final dir = calcDirection(
-      keysPressed.contains(LogicalKeyboardKey.keyA),
-      keysPressed.contains(LogicalKeyboardKey.keyW),
-      keysPressed.contains(LogicalKeyboardKey.keyD),
-      keysPressed.contains(LogicalKeyboardKey.keyS),
-    );
-    playerTank.rotateToDirection(dir);
-    if (keysPressed.contains(LogicalKeyboardKey.space)) {
-      playerTank.fire();
-    }
-    return super.onKeyEvent(event, keysPressed);
   }
 }
