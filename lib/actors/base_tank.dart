@@ -30,16 +30,12 @@ abstract class BaseTank extends SpriteComponent
 
   @override
   void update(double dt) {
-    velocity += cancel;
-
     position += velocity * maxTankSpeed * dt;
     if (velocity != Vector2.zero()) {
       final tanks = game.world.children.query<BaseTank>().toSet();
-      if (activeCollisions.intersection(tanks).isEmpty &&
-          !collidingWith(game.map!)) {
-        angle += angleTo(velocity + position);
-      }
+      angle += angleTo(velocity + position);
       bulletVelocity = velocity;
+    }
     }
     super.update(dt);
   }
@@ -49,26 +45,5 @@ abstract class BaseTank extends SpriteComponent
       velocity: bulletVelocity,
       owner: this,
     )..position = position);
-  }
-
-  Vector2 cancel = Vector2.zero();
-  @override
-  void onCollision(
-    Set<Vector2> intersectionPoints,
-    PositionComponent other,
-  ) {
-    super.onCollision(intersectionPoints, other);
-    if (other is BaseTank || other is MapComponent) {
-      final mid = (intersectionPoints.first + intersectionPoints.last) / 2;
-      final normal = absoluteCenter - mid;
-      cancel = normal.normalized();
-    }
-  }
-
-  @override
-  void onCollisionEnd(PositionComponent other) {
-    cancel = Vector2.zero();
-    velocity = Vector2.zero();
-    super.onCollisionEnd(other);
   }
 }
