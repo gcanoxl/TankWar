@@ -54,7 +54,7 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
 
     world.add(mapComponent!);
 
-    playerTank.position = Vector2(50, 50);
+    playerTank.position = Vector2(900, 700);
     world.add(playerTank);
 
     camera.follow(playerTank);
