@@ -25,34 +25,33 @@ abstract class BaseTank extends SpriteComponent
     if (sprite != null) {
       size = sprite!.image.size.scaled(0.6);
     }
-    add(CircleHitbox(isSolid: true));
+    add(RectangleHitbox(isSolid: true));
     return super.onLoad();
   }
 
-  Vector2 oldPosition = Vector2.zero();
   @override
   void update(double dt) {
-    final tanks = game.world.children.query<BaseTank>().toSet();
-    final walls = game.world.children.query<Wall>().toSet();
-    if (activeCollisions.intersection(tanks).isEmpty &&
-        activeCollisions.intersection(walls).isEmpty &&
-        !collidingWith(game.mapComponent!)) {
-      oldPosition = Vector2(
-        position.x.ceilToDouble(),
-        position.y.ceilToDouble(),
-      );
-    }
     position += velocity * maxTankSpeed * dt;
-    if (velocity != Vector2.zero()) {
-      angle += angleTo(velocity + position);
-    }
     super.update(dt);
   }
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is TiledComponent || other is BaseTank || other is Wall) {
-      position = oldPosition.clone();
+    if (other is TiledComponent || other is Wall || other is BaseTank) {
+      final mid = (intersectionPoints.first + intersectionPoints.last) / 2;
+      final normal = absoluteCenter - mid;
+      final u = normal * velocity.dot(normal) / normal.length2;
+
+      // if (velocity != Vector2.zero()) {
+      //   print(
+      //       'velocity: $velocity, normal: $normal, u: $u, end: ${(velocity - u)}');
+      // }
+      if ((velocity.y > 0 && normal.y < 0) ||
+          (velocity.y < 0 && normal.y > 0) ||
+          (velocity.x > 0 && normal.x < 0) ||
+          (velocity.x < 0 && normal.x > 0)) {
+        velocity -= u;
+      }
     }
     super.onCollision(intersectionPoints, other);
   }

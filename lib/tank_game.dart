@@ -8,7 +8,6 @@ import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart' hide Route;
-import 'package:flutter/services.dart';
 import 'package:tankwar/actors/enemy_tank.dart';
 import 'package:tankwar/actors/metal_wall.dart';
 import 'package:tankwar/actors/player_tank.dart';
@@ -22,8 +21,8 @@ import 'package:tankwar/routes/splash_route.dart';
 import 'package:tankwar/routes/tutorial_route.dart';
 
 class TankGame extends FlameGame with HasCollisionDetection {
-  @override
-  bool get debugMode => false;
+  // @override
+  // bool get debugMode => true;
 
   final PlayerTank playerTank = PlayerTank();
 
@@ -61,7 +60,7 @@ class TankGame extends FlameGame with HasCollisionDetection {
 
     world.add(mapComponent!);
 
-    playerTank.position = Vector2(900, 700);
+    playerTank.position = Vector2(200, 200);
     world.add(playerTank);
 
     camera.follow(playerTank);
