@@ -5,7 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:tankwar/actors/base_tank.dart';
 import 'package:tankwar/actors/explosion.dart';
-import 'package:tankwar/actors/wall.dart';
+import 'package:tankwar/actors/metal_wall.dart';
 import 'package:tankwar/tank_game.dart';
 
 class Bullet extends SpriteComponent
@@ -54,7 +54,7 @@ class Bullet extends SpriteComponent
       other.removeFromParent();
       removeFromParent();
     }
-    if (other is Wall) {
+    if (other is MetalWall) {
       removeFromParent();
     }
     super.onCollision(intersectionPoints, other);

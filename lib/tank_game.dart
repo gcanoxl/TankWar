@@ -10,8 +10,9 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart' hide Route;
 import 'package:flutter/services.dart';
 import 'package:tankwar/actors/enemy_tank.dart';
+import 'package:tankwar/actors/metal_wall.dart';
 import 'package:tankwar/actors/player_tank.dart';
-import 'package:tankwar/actors/wall.dart';
+import 'package:tankwar/actors/wood_wall.dart';
 import 'package:tankwar/debug_info_component.dart';
 import 'package:tankwar/routes/home_route.dart';
 import 'package:tankwar/routes/multiplayer_route.dart';
@@ -35,10 +36,20 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
   Future<void> loadMap() async {
     mapComponent = await TiledComponent.load('map1.tmx', Vector2.all(64));
     mapComponent!.add(RectangleHitbox(isSolid: false));
-    final walls = mapComponent!.tileMap.getLayer<ObjectGroup>('Wall');
-    for (var wall in walls!.objects) {
+    final metalWalls = mapComponent!.tileMap.getLayer<ObjectGroup>('MetalWall');
+    for (var wall in metalWalls!.objects) {
       mapComponent!.add(
-        Wall()
+        MetalWall()
+          ..position.x = wall.x
+          ..position.y = wall.y
+          ..size.x = wall.width
+          ..size.y = wall.height,
+      );
+    }
+    final woodWalls = mapComponent!.tileMap.getLayer<ObjectGroup>('WoodWall');
+    for (var wall in woodWalls!.objects) {
+      mapComponent!.add(
+        WoodWall()
           ..position.x = wall.x
           ..position.y = wall.y
           ..size.x = wall.width

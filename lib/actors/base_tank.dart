@@ -6,7 +6,7 @@ import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:tankwar/actors/bullet.dart';
-import 'package:tankwar/actors/wall.dart';
+import 'package:tankwar/actors/metal_wall.dart';
 import 'package:tankwar/tank_game.dart';
 
 abstract class BaseTank extends SpriteComponent
@@ -33,7 +33,7 @@ abstract class BaseTank extends SpriteComponent
   @override
   void update(double dt) {
     final tanks = game.world.children.query<BaseTank>().toSet();
-    final walls = game.world.children.query<Wall>().toSet();
+    final walls = game.world.children.query<MetalWall>().toSet();
     if (activeCollisions.intersection(tanks).isEmpty &&
         activeCollisions.intersection(walls).isEmpty &&
         !collidingWith(game.mapComponent!)) {
@@ -51,7 +51,7 @@ abstract class BaseTank extends SpriteComponent
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is TiledComponent || other is BaseTank || other is Wall) {
+    if (other is TiledComponent || other is BaseTank || other is MetalWall) {
       position = oldPosition.clone();
     }
     super.onCollision(intersectionPoints, other);
