@@ -11,6 +11,7 @@ import 'package:flutter/material.dart' hide Route;
 import 'package:flutter/services.dart';
 import 'package:tankwar/actors/enemy_tank.dart';
 import 'package:tankwar/actors/player_tank.dart';
+import 'package:tankwar/actors/wall.dart';
 import 'package:tankwar/debug_info_component.dart';
 import 'package:tankwar/routes/home_route.dart';
 import 'package:tankwar/routes/multiplayer_route.dart';
@@ -30,6 +31,21 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
   late final JoystickComponent joystick;
 
   TiledComponent? mapComponent;
+
+  Future<void> loadMap() async {
+    mapComponent = await TiledComponent.load('map1.tmx', Vector2.all(64));
+    mapComponent!.add(RectangleHitbox(isSolid: false));
+    final walls = mapComponent!.tileMap.getLayer<ObjectGroup>('Wall');
+    for (var wall in walls!.objects) {
+      mapComponent!.add(
+        Wall()
+          ..position.x = wall.x
+          ..position.y = wall.y
+          ..size.x = wall.width
+          ..size.y = wall.height,
+      );
+    }
+  }
 
   void gameInit() {
     if (joystickMode) {
@@ -102,9 +118,6 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
 
   @override
   FutureOr<void> onLoad() async {
-    mapComponent = await TiledComponent.load('map1.tmx', Vector2.all(64));
-    mapComponent!.add(RectangleHitbox(isSolid: false));
-
     add(router = RouterComponent(
       initialRoute: 'splash',
       routes: <String, Route>{
@@ -116,6 +129,7 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
         'tutorial': Route(TutorialRoute.new),
       },
     ));
+    await loadMap();
   }
 
   JoystickDirection calcDirection(

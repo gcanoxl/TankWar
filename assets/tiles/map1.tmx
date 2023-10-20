@@ -9,6 +9,6 @@
   </data>
  </layer>
  <objectgroup id="2" name="Wall">
-  <object id="1" x="640" y="320" width="64" height="64"/>
+  <object id="1" name="Wall" x="640" y="320" width="64" height="64"/>
  </objectgroup>
 </map>
