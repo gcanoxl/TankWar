@@ -33,7 +33,7 @@ abstract class BaseTank extends SpriteComponent
   void update(double dt) {
     final tanks = game.world.children.query<BaseTank>().toSet();
     if (activeCollisions.intersection(tanks).isEmpty &&
-        !collidingWith(game.map!)) {
+        !collidingWith(game.mapComponent!)) {
       oldPosition = Vector2(
         position.x.ceilToDouble(),
         position.y.ceilToDouble(),

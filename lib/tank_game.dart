@@ -4,6 +4,7 @@ import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
+import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart' hide Route;
 import 'package:flutter/services.dart';
 import 'package:tankwar/actors/enemy_tank.dart';
@@ -27,15 +28,14 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
 
   late final JoystickComponent joystick;
 
-  MapComponent? map;
+  TiledComponent? mapComponent;
 
   void gameInit() {
     if (joystickMode) {
       addJoystick();
     }
 
-    map = MapComponent();
-    world.add(map!);
+    world.add(mapComponent!);
 
     playerTank.position = Vector2(50, 50);
     world.add(playerTank);
@@ -56,15 +56,15 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
       Rectangle.fromLTWH(
         size.x / 2,
         size.y / 2,
-        map!.size.x - size.x,
-        map!.size.y - size.y,
+        mapComponent!.size.x - size.x,
+        mapComponent!.size.y - size.y,
       ),
     );
   }
 
   @override
   void onGameResize(Vector2 size) {
-    if (map != null) {
+    if (mapComponent != null) {
       resetCameraBounds(size);
     }
     super.onGameResize(size);
@@ -101,6 +101,7 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
 
   @override
   FutureOr<void> onLoad() async {
+    mapComponent = await TiledComponent.load('map1.tmx', Vector2.all(64));
     add(router = RouterComponent(
       initialRoute: 'splash',
       routes: <String, Route>{

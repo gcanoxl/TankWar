@@ -31,11 +31,11 @@ class Bullet extends SpriteComponent
     if (velocity != Vector2.zero()) {
       position += velocity * maxSpeed * dt;
     }
-    if (game.map != null) {
+    if (game.mapComponent != null) {
       final leftTopCorner = absolutePositionOfAnchor(Anchor.topLeft);
       final rightDownCorner = absolutePositionOfAnchor(Anchor.bottomRight);
-      if (leftTopCorner.x > game.map!.size.x ||
-          leftTopCorner.y > game.map!.size.y ||
+      if (leftTopCorner.x > game.mapComponent!.size.x ||
+          leftTopCorner.y > game.mapComponent!.size.y ||
           rightDownCorner.x < 0 ||
           rightDownCorner.y < 0) {
         removeFromParent();
