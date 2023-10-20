@@ -5,6 +5,8 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:tankwar/actors/bullet.dart';
+import 'package:tankwar/actors/enemy_tank.dart';
+import 'package:tankwar/components/map_component.dart';
 import 'package:tankwar/tank_game.dart';
 
 abstract class BaseTank extends SpriteComponent
@@ -18,33 +20,30 @@ abstract class BaseTank extends SpriteComponent
   static const double maxTankSpeed = 200;
 
   @override
+  // TODO: implement debugMode
+  bool get debugMode => true;
+
+  @override
   FutureOr<void> onLoad() {
     sprite = Sprite(game.images.fromCache('tank_$type.png'));
     if (sprite != null) {
-      size = sprite!.image.size.scaled(0.6);
+      size = sprite!.image.size.scaled(1);
     }
-    add(CircleHitbox());
+    add(RectangleHitbox(size: Vector2(84, 80)));
     return super.onLoad();
   }
 
   @override
   void update(double dt) {
-    final v = velocity * maxTankSpeed * dt;
-    final newPosiiotn = position + v;
-    if (newPosiiotn.x - size.x / 2 < 0 ||
-        newPosiiotn.x + size.x / 2 > game.map!.size.x) {
-      velocity.x = 0;
-    }
-    if (newPosiiotn.y - size.y / 2 < 0 ||
-        newPosiiotn.y + size.y / 2 > game.map!.size.y) {
-      velocity.y = 0;
-    }
-
-    velocity.normalize();
+    velocity += cancel;
 
     position += velocity * maxTankSpeed * dt;
     if (velocity != Vector2.zero()) {
-      angle += angleTo(velocity + position);
+      final tanks = game.world.children.query<BaseTank>().toSet();
+      if (activeCollisions.intersection(tanks).isEmpty &&
+          !collidingWith(game.map!)) {
+        angle += angleTo(velocity + position);
+      }
       bulletVelocity = velocity;
     }
     super.update(dt);
@@ -55,5 +54,26 @@ abstract class BaseTank extends SpriteComponent
       velocity: bulletVelocity,
       owner: this,
     )..position = position);
+  }
+
+  Vector2 cancel = Vector2.zero();
+  @override
+  void onCollision(
+    Set<Vector2> intersectionPoints,
+    PositionComponent other,
+  ) {
+    super.onCollision(intersectionPoints, other);
+    if (other is BaseTank || other is MapComponent) {
+      final mid = (intersectionPoints.first + intersectionPoints.last) / 2;
+      final normal = absoluteCenter - mid;
+      cancel = normal.normalized();
+    }
+  }
+
+  @override
+  void onCollisionEnd(PositionComponent other) {
+    cancel = Vector2.zero();
+    velocity = Vector2.zero();
+    super.onCollisionEnd(other);
   }
 }
