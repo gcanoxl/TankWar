@@ -34,7 +34,6 @@ abstract class BaseTank extends SpriteComponent
       angle += angleTo(velocity + position);
       bulletVelocity = velocity;
     }
-    }
     super.update(dt);
   }
 
