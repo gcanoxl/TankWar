@@ -5,7 +5,6 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:tankwar/actors/bullet.dart';
-import 'package:tankwar/actors/enemy_tank.dart';
 import 'package:tankwar/components/map_component.dart';
 import 'package:tankwar/tank_game.dart';
 
@@ -18,10 +17,6 @@ abstract class BaseTank extends SpriteComponent
   final type = 'green';
 
   static const double maxTankSpeed = 200;
-
-  @override
-  // TODO: implement debugMode
-  bool get debugMode => true;
 
   @override
   FutureOr<void> onLoad() {
