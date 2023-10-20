@@ -5,7 +5,6 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:tankwar/actors/bullet.dart';
-import 'package:tankwar/components/map_component.dart';
 import 'package:tankwar/tank_game.dart';
 
 abstract class BaseTank extends SpriteComponent
@@ -32,7 +31,6 @@ abstract class BaseTank extends SpriteComponent
   void update(double dt) {
     position += velocity * maxTankSpeed * dt;
     if (velocity != Vector2.zero()) {
-      final tanks = game.world.children.query<BaseTank>().toSet();
       angle += angleTo(velocity + position);
       bulletVelocity = velocity;
     }
