@@ -32,28 +32,16 @@ abstract class BaseTank extends SpriteComponent
   Vector2 oldPosition = Vector2.zero();
   @override
   void update(double dt) {
-    final tanks = game.world.children.query<BaseTank>().toSet();
-    final walls = game.world.children.query<Wall>().toSet();
-    if (activeCollisions.intersection(tanks).isEmpty &&
-        activeCollisions.intersection(walls).isEmpty &&
-        !collidingWith(game.mapComponent!)) {
-      oldPosition = Vector2(
-        position.x.ceilToDouble(),
-        position.y.ceilToDouble(),
-      );
-    }
     position += velocity * maxTankSpeed * dt;
     if (velocity != Vector2.zero()) {
-      angle += angleTo(velocity + position);
+      // angle += angleTo(velocity + position);
     }
     super.update(dt);
   }
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is TiledComponent || other is BaseTank || other is Wall) {
-      position = oldPosition.clone();
-    }
+    if (other is TiledComponent || other is BaseTank || other is Wall) {}
     super.onCollision(intersectionPoints, other);
   }
 
