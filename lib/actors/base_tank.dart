@@ -37,7 +37,7 @@ abstract class BaseTank extends SpriteComponent
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is TiledComponent) {
+    if (other is TiledComponent || other is Wall) {
       final mid = (intersectionPoints.first + intersectionPoints.last) / 2;
       final normal = absoluteCenter - mid;
       final u = normal * velocity.dot(normal) / normal.length2;
