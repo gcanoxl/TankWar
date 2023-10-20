@@ -19,6 +19,7 @@ abstract class BaseTank extends SpriteComponent
 
   @override
   FutureOr<void> onLoad() {
+    game.world.children.register<BaseTank>();
     sprite = Sprite(game.images.fromCache('tank_$type.png'));
     if (sprite != null) {
       size = sprite!.image.size.scaled(0.6);
