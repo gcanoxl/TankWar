@@ -6,7 +6,6 @@ import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:tankwar/actors/bullet.dart';
-import 'package:tankwar/actors/metal_wall.dart';
 import 'package:tankwar/actors/wall.dart';
 import 'package:tankwar/tank_game.dart';
 

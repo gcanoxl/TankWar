@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flame/collisions.dart';
 import 'package:tankwar/actors/wall.dart';
 
 class WoodWall extends Wall {
