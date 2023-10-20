@@ -34,7 +34,7 @@ abstract class BaseTank extends SpriteComponent
   void update(double dt) {
     position += velocity * maxTankSpeed * dt;
     if (velocity != Vector2.zero()) {
-      // angle += angleTo(velocity + position);
+      angle += angleTo(velocity + position);
     }
     super.update(dt);
   }
@@ -45,7 +45,17 @@ abstract class BaseTank extends SpriteComponent
       final mid = (intersectionPoints.first + intersectionPoints.last) / 2;
       final normal = absoluteCenter - mid;
       final u = normal * velocity.dot(normal) / normal.length2;
-      velocity -= u;
+
+      // if (velocity != Vector2.zero()) {
+      //   print(
+      //       'velocity: $velocity, normal: $normal, u: $u, end: ${(velocity - u)}');
+      // }
+      if ((velocity.y > 0 && normal.y < 0) ||
+          (velocity.y < 0 && normal.y > 0) ||
+          (velocity.x > 0 && normal.x < 0) ||
+          (velocity.x < 0 && normal.x > 0)) {
+        velocity -= u;
+      }
     }
     super.onCollision(intersectionPoints, other);
   }
