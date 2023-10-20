@@ -12,7 +12,6 @@ abstract class BaseTank extends SpriteComponent
     with HasGameRef<TankGame>, CollisionCallbacks {
   BaseTank() : super(nativeAngle: pi, anchor: Anchor.center);
   Vector2 velocity = Vector2.zero();
-  // Vector2 bulletVelocity = Vector2(0, 1).normalized();
 
   final type = 'green';
 
@@ -29,7 +28,6 @@ abstract class BaseTank extends SpriteComponent
   }
 
   Vector2 oldPosition = Vector2.zero();
-  // double oldAngle = 0;
   @override
   void update(double dt) {
     final tanks = game.world.children.query<BaseTank>().toSet();
@@ -39,13 +37,11 @@ abstract class BaseTank extends SpriteComponent
         position.x.ceilToDouble(),
         position.y.ceilToDouble(),
       );
-      // oldAngle = angle;
     }
     position += velocity * maxTankSpeed * dt;
     if (velocity != Vector2.zero()) {
       angle += angleTo(velocity + position);
     }
-    // bulletVelocity = velocity;
     super.update(dt);
   }
 
@@ -53,8 +49,6 @@ abstract class BaseTank extends SpriteComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is MapComponent || other is BaseTank) {
       position = oldPosition.clone();
-      // angle = oldAngle;
-      // velocity = Vector2.zero();
     }
     super.onCollision(intersectionPoints, other);
   }
