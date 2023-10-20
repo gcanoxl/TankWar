@@ -5,6 +5,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:tankwar/actors/bullet.dart';
+import 'package:tankwar/components/map_component.dart';
 import 'package:tankwar/tank_game.dart';
 
 abstract class BaseTank extends SpriteComponent
@@ -23,18 +24,37 @@ abstract class BaseTank extends SpriteComponent
     if (sprite != null) {
       size = sprite!.image.size.scaled(0.6);
     }
-    add(RectangleHitbox(size: Vector2(84 * 0.6, 80 * 0.6), isSolid: true));
+    add(CircleHitbox(isSolid: true));
     return super.onLoad();
   }
 
+  Vector2 oldPosition = Vector2.zero();
+  double oldAngle = 0;
   @override
   void update(double dt) {
-    position += velocity * maxTankSpeed * dt;
-    if (velocity != Vector2.zero()) {
-      angle += angleTo(velocity + position);
-      bulletVelocity = velocity;
+    final tanks = game.world.children.query<BaseTank>().toSet();
+    if (activeCollisions.intersection(tanks).isEmpty &&
+        !collidingWith(game.map!)) {
+      oldPosition = Vector2(
+        position.x.ceilToDouble(),
+        position.y.ceilToDouble(),
+      );
+      oldAngle = angle;
     }
+    position += velocity * maxTankSpeed * dt;
+    angle += angleTo(velocity + position);
+    bulletVelocity = velocity;
     super.update(dt);
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    if (other is MapComponent || other is BaseTank) {
+      position = oldPosition.clone();
+      angle = oldAngle;
+      velocity = Vector2.zero();
+    }
+    super.onCollision(intersectionPoints, other);
   }
 
   void fire() {
