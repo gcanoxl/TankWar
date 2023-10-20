@@ -7,8 +7,11 @@ class PlayerTank extends BaseTank {
   @override
   void update(double dt) {
     super.update(dt);
-    if (joystick != null) {
-      velocity = joystick!.relativeDelta.normalized();
+    if (joystick == null) {
+      return;
+    }
+    velocity = joystick!.relativeDelta.normalized();
+    if (joystick!.direction != JoystickDirection.idle) {
       angle += angleTo(velocity + position);
     }
   }
