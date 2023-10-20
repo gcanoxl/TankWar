@@ -4,8 +4,8 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
+import 'package:flame_tiled/flame_tiled.dart';
 import 'package:tankwar/actors/bullet.dart';
-import 'package:tankwar/components/map_component.dart';
 import 'package:tankwar/tank_game.dart';
 
 abstract class BaseTank extends SpriteComponent
@@ -48,7 +48,7 @@ abstract class BaseTank extends SpriteComponent
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is MapComponent || other is BaseTank) {
+    if (other is TiledComponent || other is BaseTank) {
       position = oldPosition.clone();
     }
     super.onCollision(intersectionPoints, other);

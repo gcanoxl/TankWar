@@ -1,4 +1,6 @@
 import 'dart:async';
+
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
@@ -9,7 +11,6 @@ import 'package:flutter/material.dart' hide Route;
 import 'package:flutter/services.dart';
 import 'package:tankwar/actors/enemy_tank.dart';
 import 'package:tankwar/actors/player_tank.dart';
-import 'package:tankwar/components/map_component.dart';
 import 'package:tankwar/debug_info_component.dart';
 import 'package:tankwar/routes/home_route.dart';
 import 'package:tankwar/routes/multiplayer_route.dart';
@@ -102,6 +103,8 @@ class TankGame extends FlameGame with KeyboardEvents, HasCollisionDetection {
   @override
   FutureOr<void> onLoad() async {
     mapComponent = await TiledComponent.load('map1.tmx', Vector2.all(64));
+    mapComponent!.add(RectangleHitbox(isSolid: false));
+
     add(router = RouterComponent(
       initialRoute: 'splash',
       routes: <String, Route>{
