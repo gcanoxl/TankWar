@@ -21,8 +21,8 @@ import 'package:tankwar/routes/splash_route.dart';
 import 'package:tankwar/routes/tutorial_route.dart';
 
 class TankGame extends FlameGame with HasCollisionDetection {
-  @override
-  bool get debugMode => true;
+  // @override
+  // bool get debugMode => true;
 
   final PlayerTank playerTank = PlayerTank();
 
